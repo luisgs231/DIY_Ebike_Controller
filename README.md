@@ -2,7 +2,7 @@ Idea:
 Convert a bike into e-bike using a hub motor, existing ESC and a battery.
 Added components: brake and throttle.
 
-Goal of this project is to generate the control signal fot the ESC according to the inputs.
+Goal of this project is to generate the control signal for the ESC according to the inputs.
 
 Functional features:
 - read the throttle
@@ -12,4 +12,4 @@ Functional features:
 Secondary features:
 - calibrate throttle range
 - acceleration curve
-- crusie speed with extra input
+- cruise speed with extra input

@@ -8,3 +8,4 @@ source/*.lst
 source/*.sym
 source/*.tre
 source/*.xsym
+source/*.err

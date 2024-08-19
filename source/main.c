@@ -20,14 +20,13 @@ void EXT_isr(void)
 
 void setup()
 {
-   delay_ms(20);
+   delay_ms(10);
    EXT_INT_EDGE(0, H_TO_L);
    enable_interrupts(GLOBAL);
    PORT_A_PULLUPS(0b000100);
    setup_adc(ADC_CLOCK_DIV_32);
    setup_adc_ports(throttlePin, VSS_VDD);
    set_adc_channel(3);
-   delay_ms(80);
 }
 
 void calibrate()
@@ -37,23 +36,31 @@ void calibrate()
    while(!input(brakePin));   // wait for the brake release
    while(input(brakePin))     // wait for the brake signal
    {
-      // read min & max throttle values   // TODO
+      // read min & max throttle values   // TODO ADC
    }
-   // store values   // TODO
+   // store values   // TODO EEPROM
+}
+
+void brake()
+{
+   // pulse neutral    // TODO PWM
+   delay_ms(100);
+   while(!input(brakePin));   // wait for the brake release
+   clear_interrupt(INT_EXT);
+   // re-sample before setting pwm!
 }
 
 void run()
 {
    clear_interrupt(INT_EXT);
    enable_interrupts(INT_EXT);
-}
-
-void brake()
-{
-   // pulse neutral    // TODO
-   delay_ms(100);
-   while(!input(brakePin));
-   clear_interrupt(INT_EXT);
+   // pulse neutral    // TODO PWM
+   while(true)
+   {
+      // poll throttle  // TODO ADC
+      // map values     // TODO map()
+      // set PWM        // TODO PWM
+   }
 }
 
 void main()
@@ -61,10 +68,4 @@ void main()
    setup();
    calibrate();
    run();
-   
-   while(true)
-   {
-      
-      
-   }
 }

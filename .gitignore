@@ -1,0 +1,10 @@
+source/_*
+source/*.cof
+source/*.hex
+source/*.STA
+source/*.ccspjt
+source/*.esym
+source/*.lst
+source/*.sym
+source/*.tre
+source/*.xsym

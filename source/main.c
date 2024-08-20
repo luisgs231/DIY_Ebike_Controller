@@ -1,15 +1,16 @@
-#include <12F675.h>
+#include <12F683.h>
 #device ADC=10
 #fuses NOWDT, NOPROTECT, NOMCLR, INTRC, INTRC_IO
-#use delay(internal=4000000)
+#use delay(internal=8000000)
 #use standard_io(a)
 
 #define throttlePin          sAN3      // Pin 3
 #define brakePin             PIN_A2    // Pin 5
 #define signalPin            PIN_A0    // Pin 7
 
+#use pwm(CCP1,TIMER=2,FREQUENCY=200,DUTY=50)
+
 void brake();
-//output_toggle(signalPin);
 
 #INT_EXT
 void EXT_isr(void)

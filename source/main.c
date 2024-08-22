@@ -4,18 +4,17 @@
 #use delay(internal=4000000)
 #use standard_io(a)
 
-#define throttlePin          sAN3      // Pin 3
-#define brakePin             PIN_A0    // Pin 5
-#define signalPin            PIN_A2    // Pin 7
+#define throttlePin          sAN3         // Pin 3
+#define brakePin             PIN_A0       // Pin 5
+#define signalPin            PIN_A2       // Pin 7
 
 #use pwm(CCP1,TIMER=2,OUTPUT=signalPin,FREQUENCY=250)
-//#use rs232 (baud=9600, parity=N, xmit=PIN_A5, bits=8, stream=serial)
 
 const unsigned int16 minDuty = 373;
 const unsigned int16 maxDuty = 500;
 unsigned int16 duty = minDuty;
-unsigned int16 minAdc = 42;
-unsigned int16 maxAdc = 215;
+unsigned int8 minAdc = 42;
+unsigned int8 maxAdc = 215;
 unsigned int8 adc = 0;
 
 void brake();
@@ -60,20 +59,13 @@ void setup()
    delay_ms(50);
 }
 
-void calibrate()
+void safetyCheck()
 {
-   if(input(brakePin))  return;
-   delay_ms(100);
+   delay_ms(20);
    while(input(brakePin));                // wait for the brake signal
    delay_ms(120);                         // debounce delay
    while(!input(brakePin));               // wait for the brake release
    delay_ms(120);                         // debounce delay
-   while(input(brakePin))                 // wait for the brake signal
-   {
-      // read min & max throttle values   // TODO
-   }
-   delay_ms(120);                         // debounce delay
-   // store values                        // TODO EEPROM
 }
 
 void brake()
@@ -101,6 +93,6 @@ void run()
 void main()
 {
    setup();
-   calibrate();
+   safetyCheck();
    run();
 }
